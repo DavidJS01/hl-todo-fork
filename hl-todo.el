@@ -103,22 +103,22 @@ located inside a string."
   :type '(repeat function))
 
 (defcustom hl-todo-keyword-faces
-  '(("HOLD"   . "#d0bf8f")
-    ("TODO"   . "#cc9393")
-    ("NEXT"   . "#dca3a3")
-    ("THEM"   . "#dc8cc3")
-    ("PROG"   . "#7cb8bb")
-    ("OKAY"   . "#7cb8bb")
-    ("DONT"   . "#5f7f5f")
-    ("FAIL"   . "#8c5353")
-    ("DONE"   . "#afd8af")
-    ("NOTE"   . "#d0bf8f")
-    ("MAYBE"  . "#d0bf8f")
-    ("KLUDGE" . "#d0bf8f")
-    ("HACK"   . "#d0bf8f")
-    ("TEMP"   . "#d0bf8f")
-    ("FIXME"  . "#cc9393")
-    ("XXXX*"  . "#cc9393"))
+  '(("HOLD"   . "#f7f1b0")  ;; Pastel yellow
+    ("TODO"   . "#f4a8a8")  ;; Pastel red
+    ("NEXT"   . "#f4cccc")  ;; Pastel pink
+    ("THEM"   . "#f4b8d9")  ;; Pastel purple
+    ("PROG"   . "#b8e8e1")  ;; Pastel teal
+    ("OKAY"   . "#b8e8e1")  ;; Pastel teal
+    ("DONT"   . "#a4c4a4")  ;; Pastel green
+    ("FAIL"   . "#d69b9b")  ;; Pastel brownish-red
+    ("DONE"   . "#c7e7c7")  ;; Pastel green
+    ("NOTE"   . "#f7f1b0")  ;; Pastel yellow
+    ("MAYBE"  . "#f7f1b0")  ;; Pastel yellow
+    ("KLUDGE" . "#f7f1b0")  ;; Pastel yellow
+    ("HACK"   . "#f7f1b0")  ;; Pastel yellow
+    ("TEMP"   . "#f7f1b0")  ;; Pastel yellow
+    ("FIXME"  . "#f4a8a8")  ;; Pastel red
+    ("XXXX*"  . "#f4a8a8"))
   "An alist mapping keywords to colors/faces used to display them.
 
 Each entry has the form (KEYWORD . COLOR).  KEYWORD is used as
@@ -265,12 +265,13 @@ function `hl-todo--regexp'."
                         (lambda (a b)
                           (string-match-p (format "\\`%s\\'" a) b))))))))
 
+;; TODO FIXME HACK
 (defun hl-todo--combine-face (color)
   "Combine COLOR string with `hl-todo' default face.
 If COLOR is a face symbol, do not combine, return COLOR instead."
   (if (stringp color)
-      `((,(if hl-todo-color-background :background :foreground)
-         ,color)
+      `((:background ,color
+                     :foreground ,(face-attribute 'default :background)) ;; Set foreground to default background
         hl-todo)
     color))
 
